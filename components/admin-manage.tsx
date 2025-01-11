@@ -88,7 +88,7 @@ export default function AdminManage() {
       address: ORACLE_CONTRACT_ADDRESS,
       abi: oracleAbi,
       functionName: "setUnderlyingAssetPrice",
-      args: [parseUnits("5", 18)],
+      args: [parseUnits(underlyingAssetPrice || "10", 18)],
     });
   }
 
