@@ -11,7 +11,7 @@ import {
   ledgerWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 import { defineChain } from 'viem';
-import { moonbaseAlpha } from 'viem/chains';
+import { moonbaseAlpha, kairos } from 'viem/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http, createConfig } from 'wagmi';
 import { Provider as JotaiProvider } from 'jotai';
@@ -45,11 +45,13 @@ export const assetHubWestend = defineChain({
 export const localConfig = createConfig({
   chains: [
     assetHubWestend,
-    moonbaseAlpha
+    moonbaseAlpha,
+    kairos
   ],
   transports: {
     [assetHubWestend.id]: http(),
     [moonbaseAlpha.id]: http(),
+    [kairos.id]: http(),
   },
   ssr: true,
 });
@@ -69,11 +71,13 @@ const config = getDefaultConfig({
   ],
   chains: [
     assetHubWestend,
-    moonbaseAlpha 
+    moonbaseAlpha,
+    kairos
   ],
   transports: {
     [assetHubWestend.id]: http(),
     [moonbaseAlpha.id]: http(),
+    [kairos.id]: http(),
   },
   ssr: true, // Because it is Nextjs's App router, you need to declare ssr as true
 });

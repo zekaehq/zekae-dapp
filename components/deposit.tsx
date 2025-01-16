@@ -67,7 +67,7 @@ import { Input } from "@/components/ui/input";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { truncateHash } from "@/lib/utils";
 import CopyButton from "@/components/copy-button";
-
+import { getAddressesBasedOnChainId } from "@/lib/utils";
 
 export default function Deposit() {
   // useConfig hook to get config
@@ -75,6 +75,9 @@ export default function Deposit() {
 
   // useAccount hook to get account
   const account = useAccount();
+
+  // Find the chain ID from the connected account
+  const chainId = account.chainId;
 
   // get the address from session storage
   const address = useAtomValue(addressAtom);
@@ -86,8 +89,8 @@ export default function Deposit() {
   const [open, setOpen] = useState(false);
 
   // contract addresses
-  const LST_CONTRACT_ADDRESS = "0xC4F238cEdC1f77A0Fe36F60eceDef14336e4eFbe";
-  const ZEKAE_VAULT_CONTRACT_ADDRESS = "0x1dB58359534600b08Fe7061608920f1C47E7b0b0";
+  const LST_CONTRACT_ADDRESS = getAddressesBasedOnChainId(chainId).lst as `0x${string}`;
+  const ZEKAE_VAULT_CONTRACT_ADDRESS = getAddressesBasedOnChainId(chainId).vault as `0x${string}`;
 
 
   // form schema for sending transaction
@@ -264,9 +267,6 @@ export default function Deposit() {
       refetch();
     }
   }, [isConfirmed, refetch]);
-
-  // Find the chain ID from the connected account
-  const chainId = account.chainId;
 
   // Get the block explorer URL for the current chain using the config object
   function getBlockExplorerUrl(chainId: number | undefined): string | undefined {

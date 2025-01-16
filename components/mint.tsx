@@ -66,6 +66,7 @@ import { Input } from "@/components/ui/input";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { truncateHash } from "@/lib/utils";
 import CopyButton from "@/components/copy-button";
+import { getAddressesBasedOnChainId } from "@/lib/utils";
 
 
 export default function Mint() {
@@ -74,6 +75,9 @@ export default function Mint() {
 
   // useAccount hook to get account
   const account = useAccount();
+
+  // useChainId hook to get chainId
+  const chainId = account.chainId;
 
   // get the address from session storage
   const address = useAtomValue(addressAtom);
@@ -85,9 +89,9 @@ export default function Mint() {
   const [open, setOpen] = useState(false);
 
   // contract addresses
-  const ZEKAE_VAULT_CONTRACT_ADDRESS = "0x1dB58359534600b08Fe7061608920f1C47E7b0b0";
-  const ZUSD_CONTRACT_ADDRESS = "0x66f039Bc124A3f45D3b30BFdD903B72a4857878f";
-  const ORACLE_CONTRACT_ADDRESS = "0x1Ed8c557791e0c98D72387423ab5c215d358E5a4";
+  const ZEKAE_VAULT_CONTRACT_ADDRESS = getAddressesBasedOnChainId(chainId).vault as `0x${string}`;
+  const ZUSD_CONTRACT_ADDRESS = getAddressesBasedOnChainId(chainId).zusd as `0x${string}`;
+  const ORACLE_CONTRACT_ADDRESS = getAddressesBasedOnChainId(chainId).oracle as `0x${string}`;
 
   // form schema for sending transaction
   const formSchema = z.object({
@@ -254,8 +258,6 @@ export default function Mint() {
     }
   }, [isConfirmed, refetch, oracleRefetch]);
 
-  // Find the chain ID from the connected account
-  const chainId = account.chainId;
 
   // Get the block explorer URL for the current chain using the config object
   function getBlockExplorerUrl(chainId: number | undefined): string | undefined {
