@@ -43,6 +43,9 @@
       },
     },
   },
+  "patchedDependencies": {
+    "connectkit@1.8.2": "patches/connectkit@1.8.2.patch",
+  },
   "packages": {
     "@adraffy/ens-normalize": ["@adraffy/ens-normalize@1.11.0", "", {}, "sha512-/3DDPKHqqIqxUULp8yP4zODUY1i+2xvVWsv8A79xGWdCAG+8sb0hRh0Rk2QyOJUnnbyPUAZYcpBuRe3nS2OIUg=="],
 

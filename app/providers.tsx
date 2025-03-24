@@ -29,7 +29,7 @@ const config = createConfig(
     ],
     transports: {
       // RPC URL for each chain
-      [moonbaseAlpha.id]: http(),
+      [moonbaseAlpha.id]: http("https://moonbase-alpha.drpc.org"),
     },
 
     // Required API Keys
@@ -37,6 +37,8 @@ const config = createConfig(
 
     // Required App Info
     appName: "ZeKae",
+
+
 
     // Optional App Info
     appDescription: "All inclusive DeFi platform",
@@ -53,7 +55,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <JotaiProvider>
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-          <ConnectKitProvider>
+          <ConnectKitProvider
+            theme="midnight"
+          >
             {children}
           </ConnectKitProvider>
         </QueryClientProvider>

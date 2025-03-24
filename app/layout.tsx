@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/app/providers";
 import { Toaster } from "@/components/ui/sonner"
 
-const inter = Inter({
+const sourceSans3 = Source_Sans_3({
   subsets: ["latin"],
 });
 
@@ -44,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${sourceSans3.className} antialiased`}>
         <Providers>
           <main>
             {children}

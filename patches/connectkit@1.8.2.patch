@@ -1,0 +1,14 @@
+diff --git a/build/index.es.js b/build/index.es.js
+index 05b7517b48b9d43924f0210654a21470fa28c23d..d595778659b28ed2ed9efd0887e0df20fd785bf0 100644
+--- a/build/index.es.js
++++ b/build/index.es.js
+@@ -5352,7 +5352,8 @@ disabled, icon, iconPosition = 'left', roundedIcon, waiting, arrow, download, hr
+     const key = typeof children === 'string'
+         ? children
+         : flattenChildren(children).join(''); // Need to generate a string for the key so we can automatically animate between content
+-    const hrefUrl = typeof href === 'string' ? href : flattenChildren(href).join(''); // Need to have a flat string for the href
++    // const hrefUrl = typeof href === 'string' ? href : flattenChildren(href).join(''); // Need to have a flat string for the href
++    const hrefUrl = href && (typeof href === 'string' ? href : flattenChildren(href).join(''));
+     return (jsx(ButtonContainer$1, { as: href ? 'a' : undefined, onClick: (event) => {
+             if (!disabled && onClick)
+                 onClick(event);
