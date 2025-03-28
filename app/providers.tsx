@@ -1,8 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import { moonbaseAlpha, sepolia } from 'viem/chains';
+import {
+  RainbowKitProvider,
+  getDefaultWallets,
+  getDefaultConfig,
+} from '@rainbow-me/rainbowkit';
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  trustWallet,
+  ledgerWallet,
+  uniswapWallet,
+} from '@rainbow-me/rainbowkit/wallets';
+import { kairos, moonbaseAlpha, sepolia } from 'viem/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http, createConfig } from 'wagmi';
 import { Provider as JotaiProvider } from 'jotai';
@@ -21,36 +31,30 @@ export const localConfig = createConfig({
   ssr: true,
 });
 
+const { wallets } = getDefaultWallets();
 
-// ConnectKit config
-const config = createConfig(
-  getDefaultConfig({
-    // Your dApps chains
-    chains: [
-      moonbaseAlpha,
-      sepolia,
-    ],
-    transports: {
-      // RPC URL for each chain
-      [moonbaseAlpha.id]: http("https://moonbase-alpha.drpc.org"),
-      [sepolia.id]: http("https://sepolia.drpc.org"),
+const config = getDefaultConfig({
+  appName: "ZeKae", // Name your app
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!, // Enter your WalletConnect Project ID here
+  wallets: [
+    ...wallets,
+    {
+      groupName: 'Other',
+      wallets: [uniswapWallet, trustWallet, ledgerWallet],
     },
-
-    // Required API Keys
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-
-    // Required App Info
-    appName: "ZeKae",
-
-
-
-    // Optional App Info
-    appDescription: "All inclusive DeFi platform",
-    appUrl: "https://app.zekae.com", // your app's url
-    appIcon: "https://app.zekae.com/logo.svg", // your app's icon, no bigger than 1024x1024px (max. 1MB)
-    ssr: true,
-  }),
-);
+  ],
+  chains: [
+    sepolia,
+    kairos,
+    moonbaseAlpha,
+  ],
+  transports: {
+    [sepolia.id]: http(),
+    [kairos.id]: http(),
+    [moonbaseAlpha.id]: http(),
+  },
+  ssr: true, // Because it is Nextjs's App router, you need to declare ssr as true
+});
 
 const queryClient = new QueryClient();
 
@@ -59,11 +63,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <JotaiProvider>
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-          <ConnectKitProvider
-            theme="midnight"
-          >
+          <RainbowKitProvider>
             {children}
-          </ConnectKitProvider>
+          </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </JotaiProvider>

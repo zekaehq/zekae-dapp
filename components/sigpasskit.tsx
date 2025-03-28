@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Copy, Check, KeyRound, Ban, ExternalLink, LogOut, ChevronDown, X } from 'lucide-react';
 import { formatEther, Address } from 'viem';
 import { createSigpassWallet, getSigpassWallet, checkSigpassWallet, checkBrowserWebAuthnSupport } from "@/lib/sigpass";
-import { ConnectKitButton } from "connectkit";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount, useBalance, useConfig } from 'wagmi';
 import {
   Dialog,
@@ -232,7 +232,7 @@ export default function SigpassKit() {
           </Dialog>
          : null}
         {
-          !address ? <ConnectKitButton /> : null
+          !address ? <ConnectButton /> : null
         }
       </div>
     )
@@ -365,7 +365,7 @@ export default function SigpassKit() {
           </DrawerContent>
         </Drawer>
       ) : null}
-      {!address ? <ConnectKitButton /> : null}
+      {!address ? <ConnectButton /> : null}
     </div>
   )
 }
