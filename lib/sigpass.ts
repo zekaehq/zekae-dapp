@@ -45,6 +45,7 @@ async function createOrThrow(name: string, data: Uint8Array) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return new Uint8Array((credential as any).rawId);
   } catch (error) {
+    console.error(error);
     return null;
   }
 }
@@ -67,6 +68,7 @@ async function getOrThrow(id: Uint8Array) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return new Uint8Array((credential as any).response.userHandle);
   } catch (error) {
+    console.error(error);
     return null;
   }
 }
