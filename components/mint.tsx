@@ -337,7 +337,7 @@ export default function Mint() {
                         )}
                       </FormControl>
                       <FormDescription>
-                        Amount of LST to deposit.
+                        Amount of zUSD to mint.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>

@@ -154,6 +154,11 @@ export default function Deposit() {
           ZEKAE_VAULT_CONTRACT_ADDRESS,
         ],
       },
+      {
+        address: LST_CONTRACT_ADDRESS,
+        abi: lstokenAbi,
+        functionName: "symbol",
+      },
     ],
     config: address ? localConfig : config,
   });
@@ -162,6 +167,7 @@ export default function Deposit() {
   const currentLstBalance = data?.[0]?.result as bigint | undefined;
   const depositAmount = data?.[1]?.result as bigint | undefined;
   const depositAllowance = data?.[2]?.result as bigint | undefined;
+  const lstSymbol = data?.[3]?.result as string | undefined;
 
   // extract the amount value from the form
   const amount = form.watch("amount");
@@ -285,7 +291,7 @@ export default function Deposit() {
           <Button size="icon" onClick={() => refetch()}><RefreshCcw /></Button>
         </div>
         <p className="text-lg text-muted-foreground">
-          You can deposit LST to mint zUSD
+          You can deposit {lstSymbol} to mint zUSD
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <div className="flex flex-col gap-2">
@@ -293,7 +299,7 @@ export default function Deposit() {
             {isFetching ? (
               <Skeleton className="h-6 w-32" />
             ) : (
-              <p>{formatBalance(formatUnits(currentLstBalance || BigInt(0), 18))} LST</p>
+              <p>{formatBalance(formatUnits(currentLstBalance || BigInt(0), 18))} {lstSymbol}</p>
             )}
           </div>
           <div className="flex flex-col gap-2">
@@ -301,7 +307,7 @@ export default function Deposit() {
             {isFetching ? (
               <Skeleton className="h-6 w-32" />
             ) : (
-              <p>{formatBalance(formatUnits(depositAmount || BigInt(0), 18))} LST</p>
+              <p>{formatBalance(formatUnits(depositAmount || BigInt(0), 18))} {lstSymbol}</p>
             )}
           </div>
         </div>
@@ -341,7 +347,7 @@ export default function Deposit() {
                         )}
                       </FormControl>
                       <FormDescription>
-                        Amount of LST to deposit.
+                        Amount of {lstSymbol} to deposit.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -354,7 +360,7 @@ export default function Deposit() {
                     {isFetching ? (
                       <Skeleton className="h-6 w-32" />
                     ) : (
-                      <p>{formatBalance(formatUnits(depositAllowance || BigInt(0), 18))} LST</p>
+                      <p>{formatBalance(formatUnits(depositAllowance || BigInt(0), 18))} {lstSymbol}</p>
                     )}
                   </div>
                 </div>
@@ -559,7 +565,7 @@ export default function Deposit() {
                         )}
                       </FormControl>
                       <FormDescription>
-                        Amount of LST to withdraw.
+                        Amount of {lstSymbol} to withdraw.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>

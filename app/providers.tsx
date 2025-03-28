@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import { moonbaseAlpha } from 'viem/chains';
+import { moonbaseAlpha, sepolia } from 'viem/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http, createConfig } from 'wagmi';
 import { Provider as JotaiProvider } from 'jotai';
@@ -12,9 +12,11 @@ import { Provider as JotaiProvider } from 'jotai';
 export const localConfig = createConfig({
   chains: [
     moonbaseAlpha,
+    sepolia,
   ],
   transports: {
     [moonbaseAlpha.id]: http(),
+    [sepolia.id]: http(),
   },
   ssr: true,
 });
@@ -25,11 +27,13 @@ const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
     chains: [
-      moonbaseAlpha
+      moonbaseAlpha,
+      sepolia,
     ],
     transports: {
       // RPC URL for each chain
       [moonbaseAlpha.id]: http("https://moonbase-alpha.drpc.org"),
+      [sepolia.id]: http("https://sepolia.drpc.org"),
     },
 
     // Required API Keys
