@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { MOONBASE_ALPHA_ADDRESSES, SEPOLIA_ADDRESSES } from "@/lib/addresses";
+import { MOONBASE_ALPHA_ADDRESSES, SEPOLIA_ADDRESSES, BASE_SEPOLIA_ADDRESSES } from "@/lib/addresses";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -21,6 +21,8 @@ export function getAddressesBasedOnChainId(chainId: number | undefined) {
       return MOONBASE_ALPHA_ADDRESSES;
     case 11155111:
       return SEPOLIA_ADDRESSES;
+    case 84532:
+      return BASE_SEPOLIA_ADDRESSES;
     default:
       return MOONBASE_ALPHA_ADDRESSES;
   }
